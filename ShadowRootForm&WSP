@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulario de Contacto con Shadow DOM</title>
+    <style>
+       .shadow-class{
+           width:50%;
+       } 
+    </style>
+</head>
+<body>
+
+  <!-- Define the shadow DOM -->
+  <center><div id="shadowForm" class="shadow-class"></div></center>
+<div id="shadowWSP"></div>
+
+    
+  <script>
+    // Create a shadow root
+    const shadowContainerForm = document.getElementById('shadowForm');
+    const shadowRoot = shadowContainerForm.attachShadow({ mode: 'open' });
+      
+
+    // Define the HTML content for the form within the shadow DOM
+    shadowRoot.innerHTML = `
+      <style>
+        body {
+    font-family: Arial, sans-serif;
+    
+}
+
+h2 {
+    text-align: center;
+}
+
+#formulario {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"], /* Added */
+textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+button[type="submit"] {
+    background-color: #814caf;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+}
+
+button[type="submit"]:hover {
+    background-color: #008ba5;
+}
+
+#mensajeGracias {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.whatsapp-button {
+    display: inline-block;
+    background-color: #25D366;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    font-family: Arial, sans-serif;
+}
+
+.whatsapp-button:hover {
+    background-color: #128C7E;
+}
+      </style>
+      <h2>Formulario de Contacto ShadowRoot</h2>
+      <form id="miFormulario" action="#" method="post">
+          <label for="nombre">Nombre:</label>
+          <input type="text" id="nombre" name="nombre" required>
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email" required>
+          <label for="telefono">Teléfono:</label> 
+          <input type="tel" id="telefono" name="telefono" pattern="[0-9]{10,15}" title="Formato de teléfono (10-15 digitos): xxxxxxxxxx" required> 
+          <label for="mensaje">Mensaje:</label>
+          <textarea id="mensaje" name="mensaje" rows="4" required></textarea>
+          <button type="submit">Enviar</button>
+      </form>
+      <div id="mensajeGracias" style="display:none;">
+          <p>¡Gracias por tu mensaje!</p>
+      </div>
+
+
+         <div class="contact">
+    <h3>ShadowRoot Whatsapp</h3>
+    <a class="whatsapp-button" href="https://wa.me/1234567892" target="_blank">WhatsApp</a>
+</div>
+    `;
+
+    // Listen for form submission and execute the submit event
+    shadowRoot.getElementById("miFormulario").addEventListener("submit", function(event) {
+      event.preventDefault(); // Prevent the form from being submitted traditionally
+
+      // Get form data
+      var formData = {};
+      formData['Event'] = 'gFormSent';
+      var formElements = shadowRoot.getElementById("miFormulario").elements;
+      for (var i = 0; i < formElements.length; i++) {
+        var field = formElements[i];
+        if (field.name) {
+          formData[field.name] = field.value;
+        }
+      }
+      
+      // Send a message to the parent element (window.parent) with the form data
+      window.parent.postMessage(formData, "*");
+
+      // Hide the form and display the thank you message
+      shadowRoot.getElementById("miFormulario").style.display = "none";
+      shadowRoot.getElementById("mensajeGracias").style.display = "block";
+    });
+  </script>
+
+      
+</body>
+</html>
