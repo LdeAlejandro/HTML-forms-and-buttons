@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Formulario de Contacto</title>
+    <script> 
+//crear variable capa de datos:
+ window.dataLayer = window.dataLayer || [];
+ </script>
+<style>
+body {
+    font-family: Arial, sans-serif;
+}
+
+h2 {
+    text-align: center;
+}
+
+#formulario {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"], /* Added */
+textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+button[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+}
+
+button[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+#mensajeGracias {
+    text-align: center;
+    margin-top: 20px;
+}
+</style>
+   <style>
+.whatsapp-button {
+    display: inline-block;
+    background-color: #25D366;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    font-family: Arial, sans-serif;
+}
+
+.whatsapp-button:hover {
+    background-color: #128C7E;
+}
+</style>
+    <script> 
+//crear variable capa de datos:
+ window.dataLayer = window.dataLayer || [];
+ </script>
+</head>
+<body>
+
+<h2>Formulario de Contacto </h2>
+
+<div id="formulario">
+    <form id="miFormulario" action="#" method="post">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" required>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        <label for="telefono">Teléfono:</label> 
+         <input type="tel" id="telefono" name="telefono" pattern="[0-9]{10,15}" title="Formato de teléfono (10-15 digitos): xxxxxxxxxx" required> 
+        <label for="mensaje">Mensaje:</label>
+        <textarea id="mensaje" name="mensaje" rows="4" required></textarea>
+        <button type="submit">Enviar</button>
+    </form>
+</div>
+
+<div id="mensajeGracias" style="display:none;">
+    <p>¡Gracias por tu mensaje!</p>
+</div>
+
+<script>
+    //listen form submit the execute
+document.getElementById("miFormulario").addEventListener("submit", function(event) {
+    event.preventDefault(); // Evitar que se envíe el formulario de manera tradicional
+
+    // Obtener datos del formulario
+    var formData = {};
+        formData['Event'] = 'gFormSent';
+    var formElements = document.getElementById("miFormulario").elements;
+    for (var i = 0; i < formElements.length; i++) {
+        var field = formElements[i];
+        if (field.name) {
+            formData[field.name] = field.value;
+        }
+    }
+    
+    // Enviar un mensaje al elemento padre (window.parent) con los datos del formulario
+   window.parent.postMessage(formData, "*");
+    
+
+    // Mostrar mensaje de gracias y ocultar el formulario
+    document.getElementById("formulario").style.display = "none";
+    document.getElementById("mensajeGracias").style.display = "block";
+});
+</script>
+
+     <center> <div class="contact">
+    <h3>Technical Support</h3>
+    <p>For technical support, contact us via WhatsApp:</p>
+    <a class="whatsapp-button" href="https://web.whatsapp.com/1234567892" target="_blank">WhatsApp</a>
+</div></center>
+
+</body>
+</html>
